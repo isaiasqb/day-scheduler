@@ -26,7 +26,6 @@ WHEN I refresh the page
 THEN the saved events persist
 ~~~
 
-
 ## Mock-Up
 The following animation demonstrates the application functionality:
 
@@ -34,9 +33,16 @@ The following animation demonstrates the application functionality:
 ![Screenshot](./assets/mockup2.JPG)
 
 ### Link to application
-
 https://isaiasqb.github.io/day-scheduler/
 
 ### Link to repository
-
 https://github.com/isaiasqb/day-scheduler
+
+
+## Action Plan
+- Create the basic structure (blocks of standar business hours)
+- Add functionality to display current time
+- Add fucntionality to edit tasks
+- Add functionality to save tasks
+- Work on color coding depending on past, present or future
+- Work on touch ups, color and fonts
