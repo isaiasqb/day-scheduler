@@ -15,20 +15,30 @@ for(var i = 0; i < hoursArr.length; i++){
 
 var hourBlockContainer = $("<div>").addClass("row");
 var hourDisplay = $("<div>").addClass("hour-display col-lg-1 bg-light")
-    .text(moment()
+    var blockHour = (moment()
         .set("hour", hoursArr[i])
-        .format("hh A").toString());
+        .format("hh A"));
+hourDisplay.append(blockHour)
+
 var hourTask = $("<div>").addClass("hour-task col-lg-9 bg-success")
         .attr("hour-id", hoursArr[i]);
 var hourSave = $("<div>").addClass("hour-save col-lg-1 bg-info");
 hourBlockContainer.append(hourDisplay, hourTask, hourSave);
 $("#time-blocks-list").append(hourBlockContainer);
 
-if(currentHour > hourTask.attr("hour-id")){
+if(Math.abs(currentHour) > Math.abs(hourTask.attr("hour-id"))){
     hourTask.addClass("bg-danger")
+}  else if (Math.abs(currentHour) === Math.abs(hourTask.attr("hour-id"))){
+    hourTask.addClass("bg-warning")
 }
 
+
+
+
+console.log(blockHour)
 console.log(currentHour + " current hour")
+// console.log(currentHour + $("hour-display").attr("hour-id"))
+// console.log (typeof hourDisplay.attr("hour-id"))
 // console.log(hourByBlock + " hour by block")
 };
 
