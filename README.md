@@ -31,6 +31,7 @@ THEN the saved events persist
 The following animation demonstrates the application functionality:
 
 ![Demonstration](./assets/mockup.gif)
+![Screenshot](./assets/mockup2.JPG)
 
 ### Link to application
 
