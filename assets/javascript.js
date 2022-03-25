@@ -19,6 +19,7 @@ var currentHour = moment().format("H").toString() // this is the current hour (e
     for(var i = 0; i < hoursArr.length; i++){
         //iterator for each hour of the day
         var hourId = hoursArr[i];
+        var retrivedTasks = JSON.parse(localStorage.getItem("savedTasks"))
         // create the row that contains the task sections
         var hourBlockContainer = $("<div>").addClass("time-block row")
                 .attr("hour-id", hourId);
@@ -31,7 +32,7 @@ var currentHour = moment().format("H").toString() // this is the current hour (e
             //create the description text area for heach hourly task
         var hourTask = $("<textarea>").addClass("textarea description col-lg-9")
                 .attr("hour-id", hourId)
-                .val(JSON.parse(localStorage.getItem("savedTasks"))); //assigns the value of the local storage inofmration
+                .val(retrivedTasks[i+7]); //assigns the value of the local storage inofmration
         
             // create the save button area
         var saveIcon = $("<i>").addClass("fa-solid fa-floppy-disk"); 
