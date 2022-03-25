@@ -14,7 +14,7 @@ var currentHour = moment().format("H").toString() // this is the current hour (e
 
 //TIME BLOCKS dinamically created 
 // var initializePage = function (){
-    // var savedTasks = readLocalStorage()
+//     var savedTasks = readLocalStorage()
 
     for(var i = 0; i < hoursArr.length; i++){
         //iterator for each hour of the day
@@ -60,53 +60,21 @@ var currentHour = moment().format("H").toString() // this is the current hour (e
 
 
 // //CHANGE descriptive text for every task
-// $('.saveBtn').on("click", function() {
-//     var text = $(this) //selects the text value of the element clicked on
-//     .text()
-//     .trim();
+$('.textarea').on("change", function() {
+    var text = $(this) //selects the text value of the element clicked on
+    .val()
+    .trim();
 
-//     var textInput = $("<textarea>").addClass("col-lg-9")
-//     .addClass("textarea")
-//     .val(text); // creates a nex textarea and gives  passes the p text as the text value of this new text area
-
-//     $(this).replaceWith(textInput);  //replaced the <p> element with the <textarea>
-
-//     textInput.trigger("focus"); //places cursor on text area
-//     console.log("you clikced save")
-//   });
-
-
-//EDIT the task by clicking on it.
-$(".saveBtn").on("click", "textarea", function(){
-    //get the text area current value text
-    var text = $(this)
-      .val()
-      .trim();
-    
-    // get the parent ul's id attribute
     var id = $(this)
-      .closest(".time-block")
-      .attr("hour-id")
+    .closest(".time-block")
+    .attr("hour-id")
 
-    // convert the <textarea> back into a <p> element. 
-    // var description = $("<p>")
-    //   .attr("hour-id", id)
-    //   .text(text)
-    //   .addClass("col-lg-9 description")
-    // //replace textarea with p element
-    // $(this).replaceWith(description)
+    $(".saveBtn").on("click", function(){
+        //get the text area current value text
+        saveToLocal(id, text)
+    })
 
-    var taskObject = {
-        taskHourId: id,
-        taskText: text
-        };
-
-    saveToLocal(taskObject.taskHourId, taskObject.taskText);
-})
-
-
-
-
+  });
 
 
 
@@ -116,7 +84,7 @@ var defaultSavedTasks = {
 
 //save in local storage
 var saveToLocal = function(id, data){
-    // console.log(id, data)
+    console.log("save to local" + id, data)
     var savedTasks = readLocalStorage()
     savedTasks[id] = data
 
