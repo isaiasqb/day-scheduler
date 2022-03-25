@@ -83,15 +83,6 @@ var defaultSavedTasks = {
     7:"",8:"",9:"",10:"",11:"",12:"",13:"",14:"",15:"",16:"",17:"",18:"",19:""
 }
 
-//save in local storage
-var saveToLocal = function(id, data){
-    console.log("savedToLocal - ID: "+id, " DATA: "+data)
-    var savedTasks = readLocalStorage()
-    savedTasks[id] = data
-
-    localStorage.setItem("savedTasks", JSON.stringify(savedTasks));
-};
-
 var readLocalStorage = function(){ 
     //access local storage
     var savedTasks = JSON.parse(localStorage.getItem("savedTasks"));
@@ -104,7 +95,18 @@ var readLocalStorage = function(){
     return savedTasks
 };
 
+//save in local storage
+var saveToLocal = function(id, data){
+    console.log("savedToLocal - ID: "+id, " DATA: "+data)
+    var savedTasks = readLocalStorage()
+    savedTasks[id] = data
 
+    localStorage.setItem("savedTasks", JSON.stringify(savedTasks));
+};
+
+
+
+    // DISPLAY the content of local storage in the corrensponding slots
 for(var i = 0; i < hoursArr.length; i++){
 var savedTasks = readLocalStorage()
 // console.log(savedTasks) //logs the array for tasks in local storage
@@ -112,4 +114,14 @@ console.log(hoursArr[i]) // logs each our of the hourArr
 var hourKey = hoursArr[i]
 console.log(savedTasks[hourKey]) //logs the text description stored in each key form loacl storage
 }
-// initializePage()
+
+    //CLEAR tasks of the day
+$("#clear").on("click", function() {
+    var connfirmClear = confirm("Do you want to clear the all tasks?")
+
+    if(connfirmClear){
+        localStorage.setItem("savedTasks", JSON.stringify(defaultSavedTasks));
+        location.reload()}
+    else{
+        return false};
+})
