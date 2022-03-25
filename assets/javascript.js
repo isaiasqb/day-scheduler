@@ -22,7 +22,7 @@ for(var i = 0; i < hoursArr.length; i++){
     var hourTask = $("<p>").addClass("hour-task col-lg-9")
             .attr("hour-id", hoursArr[i]);
     // create the save button area
-    var hourSave = $("<div>").addClass("hour-save col-lg-1 bg-info")
+    var hourSave = $("<div>").addClass("saveBtn col-lg-1 bg-info")
             .attr("hour-id", hoursArr[i]);
     //append al all 3 sections to the parents
     hourBlockContainer.append(hourDisplay, hourTask, hourSave);
@@ -39,7 +39,7 @@ for(var i = 0; i < hoursArr.length; i++){
     };
 }; //...end of for loop
 
-console.log(hourTask)
+
 
 //enter descriptive text for every task
 $(".hour-task").on("click", function() {
@@ -79,22 +79,30 @@ $(".hour-block").on("blur", "textarea", function(){
     $(this).replaceWith(description)
 
     var taskObject = {
-         taskText: description.text(),
-         taskHourId: description.attr("hour-id")
+        taskHourId: description.attr("hour-id"),
+        taskText: description.text()
         };
 
-    saveToLocal(taskObject.taskHourId, taskObject);
+    saveToLocal(taskObject.taskHourId, taskObject.taskText);
 })
 
-// var alltasks = []
+var savedTasks = {
+    7:"",8:"",9:"",10:"",11:"",12:"",13:"",14:"",15:"",16:"",17:"",18:"",19:""
+}
+
 //save in local storage
 var saveToLocal = function(id, data){
     console.log(id, data)
+    savedTasks[id] = data
+    console.log(savedTasks)
     localStorage.setItem(id, data);
 };
 
 
-
+for(var i=0; i<hoursArr.length; i++){
+    console.log(localStorage.key(i))
+    console.log($(".description").attr("hour-id"))
+}
 
 //maybe ad if statement to reformat the task
 //refresh page every 30min
