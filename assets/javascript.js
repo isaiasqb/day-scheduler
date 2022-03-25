@@ -14,7 +14,7 @@ var currentHour = moment().format("H").toString() // this is the current hour (e
 
 //TIME BLOCKS dinamically created 
 // var initializePage = function (){
-//     var savedTasks = readLocalStorage()
+    // var savedTasks = readLocalStorage()
 
     for(var i = 0; i < hoursArr.length; i++){
         //iterator for each hour of the day
@@ -31,7 +31,7 @@ var currentHour = moment().format("H").toString() // this is the current hour (e
             //create the description text area for heach hourly task
         var hourTask = $("<textarea>").addClass("textarea description col-lg-9")
                 .attr("hour-id", hourId)
-                // .val(savedTasks[hourId]); //assigns the value of the local storage inofmration
+                .val(JSON.parse(localStorage.getItem("savedTasks"))); //assigns the value of the local storage inofmration
         
             // create the save button area
         var saveIcon = $("<i>").addClass("fa-solid fa-floppy-disk"); 
@@ -84,7 +84,7 @@ var defaultSavedTasks = {
 
 //save in local storage
 var saveToLocal = function(id, data){
-    console.log("save to local" + id, data)
+    console.log("savedToLocal - ID: "+id, " DATA: "+data)
     var savedTasks = readLocalStorage()
     savedTasks[id] = data
 
@@ -103,26 +103,12 @@ var readLocalStorage = function(){
     return savedTasks
 };
 
+
+for(var i = 0; i < hoursArr.length; i++){
+var savedTasks = readLocalStorage()
+// console.log(savedTasks) //logs the array for tasks in local storage
+console.log(hoursArr[i]) // logs each our of the hourArr
+var hourKey = hoursArr[i]
+console.log(savedTasks[hourKey]) //logs the text description stored in each key form loacl storage
+}
 // initializePage()
-
-
-
-
-
-//we want to read all of out text areas
-//loop through each one
-//
-
-
-
-
-
-    // for(var i = 7; i < hoursArr.length+7; i++){
-    //     $("p").text(parsedSavedTasks[i]);
-    // }; //...end of for loop
-
-
-    // for(var i = 7; i<)
-
-//maybe ad if statement to reformat the task
-//refresh page every 30min
