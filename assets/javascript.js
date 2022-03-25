@@ -1,3 +1,5 @@
+
+
 // create an array with times times for the working day
 var hoursArr = ["7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]
 
@@ -8,23 +10,32 @@ $("#currentDay").text(moment().format("LL").toString())
 // save the current hour to later compare it 
 var currentHour = moment().format("H").toString() // this is the current hour (ex. 02)
 
+
+
+
 //TIME BLOCKS dinamically created 
 for(var i = 0; i < hoursArr.length; i++){
 
     // create the row that contains the task sections
-    var hourBlockContainer = $("<div>").addClass("hour-block row")
+    var hourBlockContainer = $("<div>").addClass("time-block row")
             .attr("hour-id", hoursArr[i]);
-    //create the display of each hour of the day
+    
+            //create the display of each hour of the day
     var hourDisplay = $("<div>").addClass("hour-display col-lg-1 bg-light")
     var blockHour = (moment().set("hour", hoursArr[i]).format("hh A"));
     hourDisplay.append(blockHour)
+    
     //create the description text area for heach hourly task
     var hourTask = $("<p>").addClass("hour-task col-lg-9")
-            .attr("hour-id", hoursArr[i]);
+            .attr("hour-id", hoursArr[i])
+    
     // create the save button area
+    var saveIcon = $("<i>").addClass("fa-solid fa-floppy-disk"); 
     var hourSave = $("<div>").addClass("saveBtn col-lg-1 bg-info")
-            .attr("hour-id", hoursArr[i]);
-    //append al all 3 sections to the parents
+            .attr("hour-id", hoursArr[i])
+            .append(saveIcon);
+    
+            //append al all 3 sections to the parents
     hourBlockContainer.append(hourDisplay, hourTask, hourSave);
     $("#time-blocks-list").append(hourBlockContainer);
 
@@ -41,9 +52,9 @@ for(var i = 0; i < hoursArr.length; i++){
 
 
 
-//enter descriptive text for every task
+//CHANGE descriptive text for every task
 $(".hour-task").on("click", function() {
-    var text = $(".hour-task") //selects the text value of the element clicked on
+    var text = $(this) //selects the text value of the element clicked on
       .text()
       .trim();
   
@@ -57,8 +68,8 @@ $(".hour-task").on("click", function() {
   });
 
 
-//Edit the task by clicking on it.
-$(".hour-block").on("blur", "textarea", function(){
+//EDIT the task by clicking on it.
+$(".time-block").on("blur", "textarea", function(){
     //get the text area current value text
     var text = $(this)
       .val()
@@ -66,7 +77,7 @@ $(".hour-block").on("blur", "textarea", function(){
     
     // get the parent ul's id attribute
     var id = $(this)
-      .closest(".hour-block")
+      .closest(".time-block")
       .attr("hour-id")
 
     // convert the <textarea> back into a <p> element. 
@@ -86,23 +97,36 @@ $(".hour-block").on("blur", "textarea", function(){
     saveToLocal(taskObject.taskHourId, taskObject.taskText);
 })
 
+
+
 var savedTasks = {
     7:"",8:"",9:"",10:"",11:"",12:"",13:"",14:"",15:"",16:"",17:"",18:"",19:""
 }
 
 //save in local storage
 var saveToLocal = function(id, data){
-    console.log(id, data)
+    // console.log(id, data)
     savedTasks[id] = data
-    console.log(savedTasks)
-    localStorage.setItem(id, data);
+
+    localStorage.setItem("savedTasks", JSON.stringify(savedTasks));
 };
 
+    var parsedSavedTasks = JSON.parse(localStorage.getItem("savedTasks"))
+    console.log(parsedSavedTasks)  
 
-for(var i=0; i<hoursArr.length; i++){
-    console.log(localStorage.key(i))
-    console.log($(".description").attr("hour-id"))
-}
+
+
+
+
+
+
+
+    // for(var i = 7; i < hoursArr.length+7; i++){
+    //     $("p").text(parsedSavedTasks[i]);
+    // }; //...end of for loop
+
+
+    // for(var i = 7; i<)
 
 //maybe ad if statement to reformat the task
 //refresh page every 30min
