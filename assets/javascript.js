@@ -59,25 +59,25 @@ var currentHour = moment().format("H").toString() // this is the current hour (e
 
 
 
-//CHANGE descriptive text for every task
-$('.saveBtn').on("click", function() {
-    var text = $(this) //selects the text value of the element clicked on
-    .text()
-    .trim();
+// //CHANGE descriptive text for every task
+// $('.saveBtn').on("click", function() {
+//     var text = $(this) //selects the text value of the element clicked on
+//     .text()
+//     .trim();
 
-    var textInput = $("<textarea>").addClass("col-lg-9")
-    .addClass("textarea")
-    .val(text); // creates a nex textarea and gives  passes the p text as the text value of this new text area
+//     var textInput = $("<textarea>").addClass("col-lg-9")
+//     .addClass("textarea")
+//     .val(text); // creates a nex textarea and gives  passes the p text as the text value of this new text area
 
-    $(this).replaceWith(textInput);  //replaced the <p> element with the <textarea>
+//     $(this).replaceWith(textInput);  //replaced the <p> element with the <textarea>
 
-    textInput.trigger("focus"); //places cursor on text area
-    console.log("you clikced save")
-  });
+//     textInput.trigger("focus"); //places cursor on text area
+//     console.log("you clikced save")
+//   });
 
 
 //EDIT the task by clicking on it.
-$(".time-block").on("blur", "textarea", function(){
+$(".saveBtn").on("click", "textarea", function(){
     //get the text area current value text
     var text = $(this)
       .val()
@@ -89,16 +89,16 @@ $(".time-block").on("blur", "textarea", function(){
       .attr("hour-id")
 
     // convert the <textarea> back into a <p> element. 
-    var description = $("<p>")
-      .attr("hour-id", id)
-      .text(text)
-      .addClass("col-lg-9 description")
-    //replace textarea with p element
-    $(this).replaceWith(description)
+    // var description = $("<p>")
+    //   .attr("hour-id", id)
+    //   .text(text)
+    //   .addClass("col-lg-9 description")
+    // //replace textarea with p element
+    // $(this).replaceWith(description)
 
     var taskObject = {
-        taskHourId: description.attr("hour-id"),
-        taskText: description.text()
+        taskHourId: id,
+        taskText: text
         };
 
     saveToLocal(taskObject.taskHourId, taskObject.taskText);
