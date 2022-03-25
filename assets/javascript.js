@@ -19,7 +19,7 @@ for(var i = 0; i < hoursArr.length; i++){
     var blockHour = (moment().set("hour", hoursArr[i]).format("hh A"));
     hourDisplay.append(blockHour)
     //create the description text area for heach hourly task
-    var hourTask = $("<p>").addClass("hour-task col-lg-9 bg-success")
+    var hourTask = $("<p>").addClass("hour-task col-lg-9")
             .attr("hour-id", hoursArr[i]);
     // create the save button area
     var hourSave = $("<div>").addClass("hour-save col-lg-1 bg-info")
@@ -28,11 +28,15 @@ for(var i = 0; i < hoursArr.length; i++){
     hourBlockContainer.append(hourDisplay, hourTask, hourSave);
     $("#time-blocks-list").append(hourBlockContainer);
 
+    
     //dynamically change the color depending on the hour
     if(Math.abs(currentHour) > Math.abs(hourTask.attr("hour-id"))){
-        hourTask.addClass("bg-danger")
+        hourTask.addClass("past")
     }  else if (Math.abs(currentHour) === Math.abs(hourTask.attr("hour-id"))){
-        hourTask.addClass("bg-warning")};
+        hourTask.addClass("present")}
+    else{
+        hourTask.addClass('future')
+    };
 }; //...end of for loop
 
 console.log(hourTask)
@@ -43,20 +47,17 @@ $(".hour-task").on("click", function() {
       .text()
       .trim();
   
-    var textInput = $("<textarea>").addClass("col-lg-9 bg-secondary")
-    //   .addClass("form-control")
+    var textInput = $("<textarea>").addClass("col-lg-9")
+      .addClass("textarea")
       .val(text); // creates a nex textarea and gives  passes the p text as the text value of this new text area
   
-    $(this).replaceWith(textInput);  //replaced the clicked element with the newly created text area
+    $(this).replaceWith(textInput);  //replaced the <p> element with the <textarea>
   
-    textInput.trigger("focus"); //automatically highlight the input box for to be edited
+    textInput.trigger("focus"); //places cursor on text area
   });
 
 
-
-
-
-//SAVE EDITED TASK blur event will trigger as soon as the user interacts with anything other than the <textarea> element.
+//Edit the task by clicking on it.
 $(".hour-block").on("blur", "textarea", function(){
     //get the text area current value text
     var text = $(this)
@@ -67,24 +68,33 @@ $(".hour-block").on("blur", "textarea", function(){
     var id = $(this)
       .closest(".hour-block")
       .attr("hour-id")
-    //   .replace("list-", "");
-    
-    // // get the task's position in the list of other li elements
-    // var index = $(this)
-    //   .closest(".list-group-item")
-    //   .index();
-  
-    // tasks[status][index].text = text;
-    // saveTasks()
-  
+
     // convert the <textarea> back into a <p> element. 
     var description = $("<p>")
     //   .addClass("m-1")
       .attr("hour-id", id)
-      .text(text);
+      .text(text)
+      .addClass("col-lg-9 description")
     //replace textarea with p element
     $(this).replaceWith(description)
-  });
+
+    var taskObject = {
+         taskText: description.text(),
+         taskHourId: description.attr("hour-id")
+        };
+
+    saveToLocal(taskObject.taskHourId, taskObject);
+})
+
+// var alltasks = []
+//save in local storage
+var saveToLocal = function(id, data){
+    console.log(id, data)
+    localStorage.setItem(id, data);
+};
 
 
+
+
+//maybe ad if statement to reformat the task
 //refresh page every 30min
