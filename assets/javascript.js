@@ -8,12 +8,13 @@ var hoursArr = ["7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "
 $("#currentDay").text(moment().format("LL").toString())
 
 
-// save the current hour to later compare it 
+    // save the current hour to later compare it 
 var currentHour = moment().format("H").toString() // this is the current hour (ex. 02)
 
 
     //TIME BLOCKS dinamically created 
 for(var i = 0; i < hoursArr.length; i++){
+    var startHour = parseInt(hoursArr[0]) //saves the value of the starting hour (7) in this case
         //iterator for each hour of the day
     var hourId = hoursArr[i];
         // variable that saves the current saved tasks of the locla storage
@@ -31,7 +32,7 @@ for(var i = 0; i < hoursArr.length; i++){
         //create the description text area for heach hourly task
     var hourTask = $("<textarea>").addClass("textarea description col-lg-9")
             .attr("hour-id", hourId)
-            .val(retrivedTasks[i+7]); //assigns the value of the local storage tasks
+            .val(retrivedTasks[startHour+i]); //assigns the value of the local storage tasks starting with the firts hour
     
         // create the save button area
     var saveIcon = $("<i>").addClass("fa-solid fa-floppy-disk"); 
