@@ -32,7 +32,11 @@ for(var i = 0; i < hoursArr.length; i++){
         //create the description text area for heach hourly task
     var hourTask = $("<textarea>").addClass("textarea description col-lg-9")
             .attr("hour-id", hourId)
-            .val(retrivedTasks[startHour+i]); //assigns the value of the local storage tasks starting with the firts hour
+            .val(function tasks(){
+                if (retrivedTasks){
+                return retrivedTasks[startHour+i]} 
+                else {return ""}
+            }); //assigns the value of the local storage tasks starting with the firts hour
     
         // create the save button area
     var saveIcon = $("<i>").addClass("fa-solid fa-floppy-disk"); 
